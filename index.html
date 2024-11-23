@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاهدة المحاضرات</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #1a1a1a, #000000);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            color: #ff33ff;
+            text-shadow: 0 0 10px #ff33ff;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #00ffff;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 15px;
+            background-color: #333;
+            color: white;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+
+        button {
+            padding: 10px;
+            font-size: 1rem;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00ffff, 0 0 30px #33ffff;
+        }
+
+        .video-container {
+            margin-top: 20px;
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            aspect-ratio: 16/9;
+            background: black;
+            overflow: hidden;
+            border: 2px solid #ff33ff;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .footer-text {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-text a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-text a:hover {
+            color: #ff33ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">Mr.Prince</div>
+    <div class="subtitle">مشاهدة المحاضرات</div>
+
+    <input type="text" id="videoCode" placeholder="أدخل كود المحاضرة">
+    <button onclick="loadVideo()">تشغيل الفيديو في الإطار</button>
+
+    <div class="video-container" id="videoContainer" onclick="openFullScreen()">
+        <!-- الإطار سيكون هنا -->
+    </div>
+
+    <div class="footer-text">
+        <a href="https://t.me/mstrbrns" target="_blank">القناة على تليجرام: اضغط هنا</a>
+    </div>
+
+    <script>
+        function loadVideo() {
+            const videoCode = document.getElementById('videoCode').value.trim();
+            const videoContainer = document.getElementById('videoContainer');
+            if (videoCode) {
+                try {
+                    const decodedCode = atob(videoCode);
+                    const videoUrl = `https://iframe.mediadelivery.net/embed/215061/${decodedCode}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`;
+
+                    // إضافة الفيديو داخل الإطار
+                    videoContainer.innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
+                } catch (e) {
+                    alert("الكود المدخل غير صحيح.");
+                }
+            } else {
+                alert("يرجى إدخال الكود.");
+            }
+        }
+
+        function openFullScreen() {
+            const videoFrame = document.querySelector("#videoContainer iframe");
+            if (videoFrame) {
+                const videoUrl = videoFrame.src;
+
+                // فتح الفيديو في وضع ملء الشاشة
+                const newWindow = window.open(videoUrl, '_blank', 'fullscreen=yes');
+                if (!newWindow) {
+                    alert('يرجى السماح بالنوافذ المنبثقة.');
+                }
+            } else {
+                alert("يرجى تشغيل الفيديو أولاً.");
+            }
+        }
+    </script>
+
+</body>
+</html>
