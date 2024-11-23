@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr.Prince</title>
+    <style>
+        /* تصميم الصفحة */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #1a1a1a, #000000);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* تصميم النص Mr.Prince */
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff33ff;
+            text-shadow: 0 0 10px #ff33ff, 0 0 20px #ff33ff;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* النص مشاهدة محاضرات */
+        .subtitle {
+            font-size: 1.2rem;
+            color: #00ffff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px #00ffff;
+        }
+
+        /* تصميم المربع */
+        .outer-box {
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+        }
+
+        /* حقل الإدخال */
+        input {
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 15px;
+            background-color: #333;
+            color: white;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+
+        /* زر تشغيل المحاضرة */
+        button {
+            padding: 10px;
+            font-size: 1rem;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff33ff;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00ffff, 0 0 30px #33ffff;
+        }
+
+        /* تصميم الفيديو */
+        iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        /* النصوص أسفل المربع */
+        .footer-text {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-text a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-text a:hover {
+            color: #ff33ff;
+        }
+
+        /* الإعلامات الإعلامية لتعديل العرض على الهواتف */
+        @media screen and (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            input {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+
+            button {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+
+            iframe {
+                height: 150px;
+            }
+
+            .footer-text {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- النص Mr.Prince -->
+    <div class="title">Mr.Prince</div>
+
+    <!-- النص مشاهدة محاضرات -->
+    <div class="subtitle">مشاهدة محاضرات</div>
+
+    <!-- المربع الخارجي -->
+    <div class="outer-box">
+        <!-- حقل الإدخال وزر التشغيل -->
+        <input type="text" id="videoCode" placeholder="أدخل كود المحاضرة">
+        <button onclick="playVideo()">تشغيل المحاضرة</button>
+        <!-- مكان عرض الفيديو -->
+        <iframe id="videoFrame" src="" style="display: none;" onclick="openVideoFullScreen()"></iframe>
+    </div>
+
+    <!-- النصوص أسفل المربع -->
+    <div class="footer-text">
+        <a href="https://t.me/mstrbrns" target="_blank">القناة على تليجرام: اضغط هنا</a>
+    </div>
+
+    <script>
+        function playVideo() {
+            const videoCode = document.getElementById('videoCode').value.trim();
+            const videoFrame = document.getElementById('videoFrame');
+            if (videoCode) {
+                try {
+                    // فك تشفير Base64
+                    const decodedCode = atob(videoCode);
+                    const videoUrl = `https://iframe.mediadelivery.net/embed/215061/${decodedCode}?autoplay=true&loop=false&muted=false&preload=true&responsive=true`;
+                    videoFrame.src = videoUrl;
+                    videoFrame.style.display = "block";
+                } catch (e) {
+                    alert("الكود المدخل غير صحيح.");
+                }
+            } else {
+                alert("يرجى إدخال الكود.");
+            }
+        }
+
+        function openVideoFullScreen() {
+            const videoFrame = document.getElementById('videoFrame');
+            const videoUrl = videoFrame.src;
+            if (videoUrl) {
+                // فتح الفيديو في نافذة جديدة
+                window.open(videoUrl, "_blank", "width=1280,height=720");
+            }
+        }
+    </script>
+</body>
+</html>
